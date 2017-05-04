@@ -1,0 +1,1 @@
+(printout t "OLA" crlf)
