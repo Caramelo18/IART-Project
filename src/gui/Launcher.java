@@ -17,8 +17,16 @@ public class Launcher {
 
         try {
             engine.batch("rules/rules.clp");
+
+            engine.eval("(assert (temperature (celsius 30)))\n");
+            engine.eval("(assert (timeDay (hours 12)))");
+
+            engine.run();
         }catch (JessException e){
             e.printStackTrace();
         }
+
+
+
     }
 }
