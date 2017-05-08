@@ -49,7 +49,3 @@
     (soilHumidity {percentage < .40})
     => (printout t "Increase irrigation duration." crlf))
 
-(assert (temperature (celsius 30)))
-(assert (timeDay (hours 12)))
-
-(run)
