@@ -13,6 +13,7 @@ public class Launcher {
     public static void main(String[] args){
 
         FuzzyRete engine = new FuzzyRete();
+        Menu m = new Menu();
 
 
         try {
