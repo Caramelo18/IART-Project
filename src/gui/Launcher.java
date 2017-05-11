@@ -11,12 +11,10 @@ import javax.swing.*;
  */
 public class Launcher {
 
-    private static Rete motor;
-
+    static FuzzyRete engine = new FuzzyRete();
 
     public static void main(String[] args){
 
-        FuzzyRete engine = new FuzzyRete();
         Menu m = new Menu();
 
         JTextArea results = m.getTextArea();
@@ -26,13 +24,26 @@ public class Launcher {
         engine.addOutputRouter("WSTDERR", taw);
         try {
             engine.batch("rules/rules.clp");
-
-            engine.eval("(assert (temperature (celsius 30)))\n");
-            engine.eval("(assert (timeDay (hours 12)))");
-
-            engine.run();
         }catch (JessException e){
             e.printStackTrace();
         }
     }
+
+    public static void addEval(String rule){
+        try {
+            engine.eval(rule);
+        }catch(JessException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void run(){
+        try {
+            engine.run();
+        }catch(JessException e){
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -1,8 +1,6 @@
 (import nrc.fuzzy.jess.*)
 (import nrc.fuzzy.*)
 
-(printout t "OLA X" crlf)
-
 (deftemplate temperature (slot celsius))
 (deftemplate timeDay (slot hours))
 (deftemplate phWater (slot ph))
