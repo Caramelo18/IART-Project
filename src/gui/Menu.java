@@ -12,6 +12,7 @@ public class Menu extends JFrame{
     private JPanel rootPanel;
     private JTextField temperature;
     private JButton exit;
+    private JTextArea textArea;
 
     public Menu(){
         super("Titulo");
@@ -39,6 +40,10 @@ public class Menu extends JFrame{
 
             }
         });
+    }
+
+    public JTextArea getTextArea(){
+        return textArea;
     }
 
     private void createUIComponents() {
