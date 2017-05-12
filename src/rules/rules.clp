@@ -1,6 +1,35 @@
 (import nrc.fuzzy.jess.*)
 (import nrc.fuzzy.*)
 
+
+(defglobal ?*fuzzy-temp* = (new nrc.fuzzy.FuzzyVariable "temp" 0.0 40.0 "C"))
+(defglobal ?*fuzzy-time* = (new nrc.fuzzy.FuzzyVariable "time" 0.0 24.0 "h"))
+
+(defrule init
+    =>
+    (load-package nrc.fuzzy.jess.FuzzyFunctions)
+    ;; temperature
+    (bind ?xHot (create$ 22.0 40.0))
+    (bind ?yHot (create$ 0.0 1.0))
+    (bind ?xCold (create$ 0.0 20.0))
+    (bind ?yCold (create$ 1.0 0.0))
+    (bind ?xNice (create$ 20.0 22.0))
+    (bind ?yNice (create$ 1.0 1.0))
+    (?*fuzzy-temp* addTerm "hot" ?xHot ?yHot 2)
+    (?*fuzzy-temp* addTerm "cold" ?xCold ?yCold 2)
+    (?*fuzzy-temp* addTerm "nice" ?xNice ?yNice 2)
+
+    ;; time of day
+    (bind ?xDay (create$ 7.0 19.0))
+    (bind ?yDay (create$ 1.0 1.0))
+    (bind ?xNight (create$ 0.0 7.0))
+    (bind ?yNight (create$ 0.0 1.0))
+    (bind ?xNight1 (create$ 19.0 24.0))
+    (bind ?yNight1 (create$ 1.0 0.0))
+)
+
+
+
 (deftemplate temperature (slot celsius))
 (deftemplate timeDay (slot hours))
 (deftemplate phWater (slot ph))
@@ -28,7 +57,7 @@
     => (printout t "Turn the heating on." crlf))
 
 (defrule dryAir
-    (airHumidity {percentage > .60})
+    (airHumidity {percentage < .60})
     => (printout t "Turn the heating off." crlf))
 
 (defrule lowPh
