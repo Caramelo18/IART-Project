@@ -40,6 +40,7 @@ public class Launcher {
     public static void run(){
         try {
             engine.run();
+            engine.reset();
         }catch(JessException e){
             e.printStackTrace();
         }

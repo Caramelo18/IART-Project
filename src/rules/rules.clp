@@ -18,6 +18,7 @@
     (?*fuzzy-temp* addTerm "hot" ?xHot ?yHot 2)
     (?*fuzzy-temp* addTerm "cold" ?xCold ?yCold 2)
     (?*fuzzy-temp* addTerm "nice" ?xNice ?yNice 2)
+    (assert (theTemp (new nrc.fuzzy.FuzzyValue ?*fuzzy-temp* "very medium")))
 
     ;; time of day
     (bind ?xDay (create$ 7.0 19.0))
