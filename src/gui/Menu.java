@@ -25,7 +25,7 @@ public class Menu extends JFrame{
     private boolean validInput = true;
 
     public Menu(){
-        super("Titulo");
+        super("IART -  Sistema de Regras IOT");
         setContentPane(rootPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
         setSize(1000, 600);
@@ -52,6 +52,7 @@ public class Menu extends JFrame{
                 if(!temperature.getText().isEmpty()){
                     int temp = new Integer(temperature.getText());
                     if(temp < 0 || temp > 40){
+                        textArea.setText("Invalid temperature");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (temperature (celsius " + temperature.getText() + ")))");
@@ -63,6 +64,7 @@ public class Menu extends JFrame{
                 if(!ph.getText().isEmpty()){
                     double phval = new Double(ph.getText());
                     if(phval < 0.0 || phval > 14.0){
+                        textArea.setText("Invalid pH");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (phWater (ph " + ph.getText() + ")))");
@@ -70,6 +72,7 @@ public class Menu extends JFrame{
                 if(!wind.getText().isEmpty()){
                     int windVal = new Integer(wind.getText());
                     if(windVal < 0 || windVal > 150){
+                        textArea.setText("Invalid wind speed");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (windSpeed (velocity " + wind.getText() + ")))");
@@ -77,6 +80,7 @@ public class Menu extends JFrame{
                 if(!airH.getText().isEmpty()){
                     int airHVal = new Integer(airH.getText());
                     if(airHVal < 0 || airHVal > 100){
+                        textArea.setText("Invalid air humidity");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
@@ -84,6 +88,7 @@ public class Menu extends JFrame{
                 if(!soilH.getText().isEmpty()){
                     int soilHVal = new Integer(soilH.getText());
                     if(soilHVal < 0 || soilHVal > 40){
+                        textArea.setText("Invalid soil humidity");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (soilHumidity (percentage " + soilH.getText() + ")))");
@@ -91,6 +96,7 @@ public class Menu extends JFrame{
                 if(!conduct.getText().isEmpty()){
                     int conductVal = new Integer(conduct.getText());
                     if(conductVal < 0 || conductVal > 40){
+                        textArea.setText("Invalid conductivity");
                         validInput = false;
                     }
                     Launcher.addEval("(assert (conductivity (water " + conduct.getText() + ")))");

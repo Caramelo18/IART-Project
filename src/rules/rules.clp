@@ -1,7 +1,7 @@
 (import nrc.fuzzy.jess.*)
 (import nrc.fuzzy.*)
 
-
+/*
 (defglobal ?*fuzzy-temp* = (new nrc.fuzzy.FuzzyVariable "temp" 0.0 40.0 "C"))
 (defglobal ?*fuzzy-time* = (new nrc.fuzzy.FuzzyVariable "time" 0.0 24.0 "h"))
 
@@ -28,7 +28,7 @@
     (bind ?xNight1 (create$ 19.0 24.0))
     (bind ?yNight1 (create$ 1.0 0.0))
 )
-
+*/
 
 
 (deftemplate temperature (slot celsius))
@@ -48,6 +48,16 @@
     (temperature {celsius < 20})
     (timeDay { hours < 18 && hours > 7})
     => (printout t "Close the windows. It's cold inside." crlf))
+
+(defrule hotInsideNight
+    (temperature {celsius >= 17})
+    (timeDay { hours > 18 || hours < 7})
+    => (printout t "Open the windows. It's hot inside." crlf))
+
+(defrule coldInsideNight
+    (temperature {celsius < 14.5})
+    (timeDay { hours > 18 || hours < 7})
+    => (printout t "Close the windows and turn on the heating. It's cold inside." crlf))
 
 (defrule windy
     (windSpeed {velocity >= 50})
