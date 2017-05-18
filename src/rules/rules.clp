@@ -40,24 +40,18 @@
 (deftemplate conductivity (slot water))
 
 (defrule hotInside
-    (temperature {celsius >= 22})
-    (timeDay { hours < 18 && hours > 7})
+    (or (and (temperature {celsius >= 22})
+            (timeDay { hours < 18 && hours > 7}))
+        (and (temperature {celsius >= 17})
+        (timeDay { hours > 18 || hours < 7})))
     => (printout t "Open the windows. It's hot inside." crlf))
 
 (defrule coldInside
-    (temperature {celsius < 20})
-    (timeDay { hours < 18 && hours > 7})
+    (or (and (temperature {celsius < 20})
+            (timeDay { hours < 18 && hours > 7}))
+        (and (temperature {celsius < 14.5})
+            (timeDay { hours > 18 || hours < 7})))
     => (printout t "Close the windows. It's cold inside." crlf))
-
-(defrule hotInsideNight
-    (temperature {celsius >= 17})
-    (timeDay { hours > 18 || hours < 7})
-    => (printout t "Open the windows. It's hot inside." crlf))
-
-(defrule coldInsideNight
-    (temperature {celsius < 14.5})
-    (timeDay { hours > 18 || hours < 7})
-    => (printout t "Close the windows and turn on the heating. It's cold inside." crlf))
 
 (defrule windy
     (windSpeed {velocity >= 50})
