@@ -21,6 +21,20 @@ public class Menu extends JFrame{
     private JTextField soilH;
     private JTextField conduct;
     private JComboBox timeList;
+    private JTabbedPane tabbedPane1;
+    private JSlider slider1;
+    private JSlider slider2;
+    private JSlider slider3;
+    private JSlider slider4;
+    private JSlider slider5;
+    private JSlider slider6;
+    private JSlider slider7;
+    private JSlider slider8;
+    private JSlider slider9;
+    private JSlider slider10;
+    private JSlider slider11;
+    private JSlider slider12;
+    private JSlider slider13;
 
     private boolean validInput = true;
 
