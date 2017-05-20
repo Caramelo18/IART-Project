@@ -61,14 +61,14 @@ public class Launcher {
             //   1. using arrays of x and y values to define the shape of the fuzzy set
             //   2. using already defined terms of the fuzzy variable and linguistic
             //      expressions
-            double xHot[] = {minHot, minHot + 10};
+            double xHot[] = {minHot, minHot + 5};
             double yHot[] = {0, 1};
             double xCold[] = {maxCold - 10, maxCold};
             double yCold[] = {1, 0};
 
             // Create new fuzzy variable for temperature with Universe of discourse
             // from 0 to 100 and units "C".
-            FuzzyVariable temp = new FuzzyVariable("temperature", 0, 40, "C");
+            FuzzyVariable temp = new FuzzyVariable("temperature", 0, minHot + 10, "C");
 
             // Add three terms hot, cold and medium
             temp.addTerm("hot", xHot, yHot, 2);
