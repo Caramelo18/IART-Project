@@ -24,6 +24,7 @@ public class Launcher {
         engine.addOutputRouter("WSTDERR", taw);
         try {
             engine.batch("rules/rules.clp");
+//            addEval("(defaultParams 20 22 14.5 17 7 18 50 5.5 6.5 40 60 60 80)");
         }catch (JessException e){
             e.printStackTrace();
         }
@@ -37,10 +38,11 @@ public class Launcher {
         }
     }
 
-    public static void run(){
+    public static void run(boolean reset){
         try {
             engine.run();
-            engine.reset();
+            if(reset)
+                engine.reset();
         }catch(JessException e){
             e.printStackTrace();
         }

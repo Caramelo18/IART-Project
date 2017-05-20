@@ -22,19 +22,20 @@ public class Menu extends JFrame{
     private JTextField conduct;
     private JComboBox timeList;
     private JTabbedPane tabbedPane1;
-    private JSlider slider1;
-    private JSlider slider2;
-    private JSlider slider3;
-    private JSlider slider4;
-    private JSlider slider5;
-    private JSlider slider6;
-    private JSlider slider7;
-    private JSlider slider8;
-    private JSlider slider9;
-    private JSlider slider10;
-    private JSlider slider11;
-    private JSlider slider12;
-    private JSlider slider13;
+    private JSlider soilMin;
+    private JSlider soilMax;
+    private JSlider airMin;
+    private JSlider airMax;
+    private JSlider phMin;
+    private JSlider phMax;
+    private JSlider windSpeed;
+    private JSlider nightTempMin;
+    private JSlider nightTempMax;
+    private JSlider timeMin;
+    private JSlider timeMax;
+    private JSlider dayTempMin;
+    private JSlider dayTempMax;
+    private JButton saveConfigurationButton;
 
     private boolean validInput = true;
 
@@ -47,8 +48,6 @@ public class Menu extends JFrame{
         setVisible(true);
 
         initButtons();
-
-       // pack();
     }
 
     private void initButtons(){
@@ -117,9 +116,31 @@ public class Menu extends JFrame{
                 }
 
                 if(validInput)
-                    Launcher.run();
+                    Launcher.run(true);
                 else
                     validInput = true;
+            }
+        });
+
+        saveConfigurationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String rule = "(params (" + dayTempMin.getValue()
+                        + " " + dayTempMax.getValue()
+                        + " " + nightTempMin.getValue()
+                        + " " + nightTempMax.getValue()
+                        + " " + timeMin.getValue()
+                        + " " + timeMax.getValue()
+                        + " " + windSpeed.getValue()
+                        + " " + phMin.getValue()
+                        + " " + phMax.getValue()
+                        + " " + soilMin.getValue()
+                        + " " + soilMax.getValue()
+                        + " " + airMin.getValue()
+                        + " " + airMax.getValue()
+                        + "))";
+                Launcher.addEval(rule);
+                Launcher.run(false);
             }
         });
     }

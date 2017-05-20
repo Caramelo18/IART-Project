@@ -185,7 +185,7 @@
               </component>
             </children>
           </grid>
-          <grid id="28dd" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="28dd" layout-manager="GridLayoutManager" row-count="8" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Limits"/>
@@ -249,7 +249,7 @@
                   <text value="Night Temperature"/>
                 </properties>
               </component>
-              <component id="bc14f" class="javax.swing.JSlider" binding="slider1" default-binding="true">
+              <component id="bc14f" class="javax.swing.JSlider" binding="soilMin">
                 <constraints>
                   <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -263,7 +263,7 @@
                   <valueIsAdjusting value="false"/>
                 </properties>
               </component>
-              <component id="a9e06" class="javax.swing.JSlider" binding="slider2" default-binding="true">
+              <component id="a9e06" class="javax.swing.JSlider" binding="soilMax">
                 <constraints>
                   <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -277,7 +277,7 @@
                   <value value="60"/>
                 </properties>
               </component>
-              <component id="48742" class="javax.swing.JSlider" binding="slider3">
+              <component id="48742" class="javax.swing.JSlider" binding="airMin">
                 <constraints>
                   <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -291,7 +291,7 @@
                   <valueIsAdjusting value="false"/>
                 </properties>
               </component>
-              <component id="6ba88" class="javax.swing.JSlider" binding="slider4">
+              <component id="6ba88" class="javax.swing.JSlider" binding="airMax">
                 <constraints>
                   <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -305,7 +305,7 @@
                   <value value="80"/>
                 </properties>
               </component>
-              <component id="a2a14" class="javax.swing.JSlider" binding="slider5" default-binding="true">
+              <component id="a2a14" class="javax.swing.JSlider" binding="phMin">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -319,7 +319,7 @@
                   <toolTipText value="Minimum pH"/>
                 </properties>
               </component>
-              <component id="b3b22" class="javax.swing.JSlider" binding="slider6" default-binding="true">
+              <component id="b3b22" class="javax.swing.JSlider" binding="phMax">
                 <constraints>
                   <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -333,7 +333,7 @@
                   <toolTipText value="Maximum pH"/>
                 </properties>
               </component>
-              <component id="16ef0" class="javax.swing.JSlider" binding="slider7" default-binding="true">
+              <component id="16ef0" class="javax.swing.JSlider" binding="windSpeed">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -346,7 +346,7 @@
                   <paintTicks value="true"/>
                 </properties>
               </component>
-              <component id="15a4" class="javax.swing.JSlider" binding="slider8" default-binding="true">
+              <component id="15a4" class="javax.swing.JSlider" binding="nightTempMin">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -359,7 +359,7 @@
                   <value value="14"/>
                 </properties>
               </component>
-              <component id="fbfa2" class="javax.swing.JSlider" binding="slider9" default-binding="true">
+              <component id="fbfa2" class="javax.swing.JSlider" binding="nightTempMax">
                 <constraints>
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -372,9 +372,9 @@
                   <value value="17"/>
                 </properties>
               </component>
-              <component id="589b0" class="javax.swing.JSlider" binding="slider10" default-binding="true">
+              <component id="589b0" class="javax.swing.JSlider" binding="timeMin">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="1" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <majorTickSpacing value="2"/>
@@ -387,7 +387,7 @@
                   <value value="7"/>
                 </properties>
               </component>
-              <component id="ebfa8" class="javax.swing.JSlider" binding="slider11" default-binding="true">
+              <component id="ebfa8" class="javax.swing.JSlider" binding="timeMax">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -401,7 +401,7 @@
                   <value value="18"/>
                 </properties>
               </component>
-              <component id="b4b43" class="javax.swing.JSlider" binding="slider12" default-binding="true">
+              <component id="b4b43" class="javax.swing.JSlider" binding="dayTempMin">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -415,7 +415,7 @@
                   <value value="20"/>
                 </properties>
               </component>
-              <component id="3a26" class="javax.swing.JSlider" binding="slider13" default-binding="true">
+              <component id="3a26" class="javax.swing.JSlider" binding="dayTempMax">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -427,6 +427,14 @@
                   <paintTicks value="true"/>
                   <paintTrack value="true"/>
                   <value value="22"/>
+                </properties>
+              </component>
+              <component id="f8846" class="javax.swing.JButton" binding="saveConfigurationButton" default-binding="true">
+                <constraints>
+                  <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Save configuration"/>
                 </properties>
               </component>
             </children>
