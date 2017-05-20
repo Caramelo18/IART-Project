@@ -125,7 +125,7 @@ public class Menu extends JFrame{
         saveConfigurationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String rule = "(params (" + dayTempMin.getValue()
+                String rule = "(params " + dayTempMin.getValue()
                         + " " + dayTempMax.getValue()
                         + " " + nightTempMin.getValue()
                         + " " + nightTempMax.getValue()
@@ -138,7 +138,7 @@ public class Menu extends JFrame{
                         + " " + soilMax.getValue()
                         + " " + airMin.getValue()
                         + " " + airMax.getValue()
-                        + "))";
+                        + ")";
                 Launcher.addEval(rule);
                 Launcher.run(false);
             }

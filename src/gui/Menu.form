@@ -344,6 +344,7 @@
                   <minorTickSpacing value="1"/>
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
+                  <toolTipText value="Maximum wind speed"/>
                 </properties>
               </component>
               <component id="15a4" class="javax.swing.JSlider" binding="nightTempMin">
@@ -356,6 +357,7 @@
                   <minorTickSpacing value="1"/>
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
+                  <toolTipText value="Minimum temperature during the night"/>
                   <value value="14"/>
                 </properties>
               </component>
@@ -369,6 +371,7 @@
                   <minorTickSpacing value="1"/>
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
+                  <toolTipText value="Maximum temperature during the night"/>
                   <value value="17"/>
                 </properties>
               </component>
@@ -384,6 +387,7 @@
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
                   <snapToTicks value="false"/>
+                  <toolTipText value="Day Break"/>
                   <value value="7"/>
                 </properties>
               </component>
@@ -398,6 +402,7 @@
                   <minorTickSpacing value="1"/>
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
+                  <toolTipText value="Sunset"/>
                   <value value="18"/>
                 </properties>
               </component>
@@ -412,6 +417,7 @@
                   <minorTickSpacing value="1"/>
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
+                  <toolTipText value="Minimum Temperature during the day"/>
                   <value value="20"/>
                 </properties>
               </component>
@@ -426,6 +432,7 @@
                   <paintLabels value="true"/>
                   <paintTicks value="true"/>
                   <paintTrack value="true"/>
+                  <toolTipText value="Maximum temperature during the day"/>
                   <value value="22"/>
                 </properties>
               </component>
