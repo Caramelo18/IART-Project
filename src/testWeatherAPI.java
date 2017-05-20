@@ -1,4 +1,5 @@
 import net.aksingh.owmjapis.DailyForecast;
+import net.aksingh.owmjapis.HourlyForecast;
 import org.codehaus.jettison.json.JSONException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,18 +13,27 @@ public class testWeatherAPI      {
     public static void main(String[] args) throws IOException, MalformedURLException, JSONException {
         boolean isMetric = true;
         String owmApiKey = "12157ac458c5e1cfcd8d5dbd1e368120";
-        String weatherCity = "Porto,PT";
+        String weatherCity = "Porto";
         byte forecastDays = 3;
 
-        OpenWeatherMap.Units units = (isMetric) ? OpenWeatherMap.Units.METRIC
-                                                : OpenWeatherMap.Units.IMPERIAL;
-
-        OpenWeatherMap owm = new OpenWeatherMap(units,owmApiKey);
-
+        OpenWeatherMap.Units units = (isMetric)
+                ? OpenWeatherMap.Units.METRIC
+                : OpenWeatherMap.Units.IMPERIAL;
+        OpenWeatherMap owm = new OpenWeatherMap(units, owmApiKey);
         try {
-            DailyForecast forecast
-        }catch ()
-
-
+            DailyForecast forecast = owm.dailyForecastByCityName(weatherCity, forecastDays);
+            System.out.println("Weather for: " + forecast.getCityInstance().getCityName());
+            int numForecasts = forecast.getForecastCount();
+            for (int i = 0; i < numForecasts; i++) {
+                DailyForecast.Forecast dayForecast = forecast.getForecastInstance(i);
+                DailyForecast.Forecast.Temperature temperature = dayForecast.getTemperatureInstance();
+                System.out.println("\t" + dayForecast.getDateTime());
+                System.out.println("\tTemperature: " + temperature.getMinimumTemperature() +
+                        " to " + temperature.getMaximumTemperature() + "\n");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
