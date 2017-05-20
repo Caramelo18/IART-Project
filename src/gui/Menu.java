@@ -1,5 +1,9 @@
 package gui;
 
+import nrc.fuzzy.FuzzyValue;
+import nrc.fuzzy.FuzzyVariable;
+import nrc.fuzzy.InvalidLinguisticExpressionException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +40,7 @@ public class Menu extends JFrame{
     private JSlider dayTempMin;
     private JSlider dayTempMax;
     private JButton saveConfigurationButton;
+    private JTextArea stats;
 
     private boolean validInput = true;
 
@@ -48,6 +53,7 @@ public class Menu extends JFrame{
         setVisible(true);
 
         initButtons();
+        initStats(true);
     }
 
     private void initButtons(){
@@ -151,5 +157,25 @@ public class Menu extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    private void initStats(boolean day){
+        FuzzyVariable temp;
+        if(day)
+            temp = Launcher.dayTemp;
+        else temp = Launcher.nightTemp;
+        try {
+            FuzzyValue fval = new FuzzyValue(temp, "cold");
+            FuzzyValue fval2 = new FuzzyValue(temp, "medium");
+            FuzzyValue fval3 = new FuzzyValue(temp, "hot");
+            FuzzyValue[] list = new FuzzyValue[3];
+            list[0] = fval;
+            list[1] = fval2;
+            list[2] = fval3;
+            String plot = fval.plotFuzzyValues("+*-", list);
+            stats.setText(plot);
+        }catch(InvalidLinguisticExpressionException e){
+            e.printStackTrace();
+        }
     }
 }

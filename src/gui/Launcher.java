@@ -14,19 +14,21 @@ import javax.swing.*;
 public class Launcher {
 
     static FuzzyRete engine = new FuzzyRete();
+    static Menu m;
     static FuzzyVariable nightTemp;
     static FuzzyVariable dayTemp;
 
     public static void main(String[] args){
 
-        Menu m = new Menu();
-
+        nightTemp = assignFuzzyValues(14, 17);
+        dayTemp = assignFuzzyValues(20, 22);
+        m = new Menu();
         JTextArea results = m.getTextArea();
         JTextAreaWriter taw = new JTextAreaWriter((results));
         engine.addOutputRouter("t", taw);
         engine.addOutputRouter("WSTDOUT", taw);
         engine.addOutputRouter("WSTDERR", taw);
-        assignFuzzyValues(17, 22);
+
         try {
             engine.batch("rules/rules.clp");
         }catch (JessException e){
@@ -63,7 +65,6 @@ public class Launcher {
             double yHot[] = {0, 1};
             double xCold[] = {maxCold - 10, maxCold};
             double yCold[] = {1, 0};
-            FuzzyValue fval = null;
 
             // Create new fuzzy variable for temperature with Universe of discourse
             // from 0 to 100 and units "C".
@@ -75,15 +76,14 @@ public class Launcher {
             // Note: once a term is added it can be used to define other terms
             temp.addTerm("medium", "not hot and not cold");
 
-            //return temp;
+            return temp;
 
             // Now we can define fuzzy values using the terms in the fuzzy variable.
             // Note: fuzzy values can also be created using fuzzy sets, etc. and not
             //       just with linguistic expressions.
-            fval = new FuzzyValue(temp, "very hot or cold");
-            String plot = fval.plotFuzzyValue("+");
 
-            System.out.println(plot);
+
+            //System.out.println(plot);
         }catch(Exception e){
             e.printStackTrace();
         }
