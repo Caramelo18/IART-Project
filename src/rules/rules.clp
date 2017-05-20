@@ -74,14 +74,14 @@
 (defrule hotInside
     (or (and (temperature {celsius >= ?*dayTempMax*})
             (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-        (and (temperature {celsius >= nightTempMax*})
+        (and (temperature {celsius >= ?*nightTempMax*})
         (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))
     => (printout t "Open the windows. It's hot inside." crlf))
 
 (defrule coldInside
     (or (and (temperature {celsius < ?*dayTempMin*})
             (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-        (and (temperature {celsius < nightTempMin*})
+        (and (temperature {celsius < ?*nightTempMin*})
             (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))
     => (printout t "Close the windows. It's cold inside." crlf))
 
