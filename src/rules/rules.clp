@@ -72,7 +72,7 @@
 
 (defrule hotInside
     (or (and (temperature {celsius >= ?*dayTempMax*})
-            (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+             (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
         (and (temperature {celsius >= ?*nightTempMax*})
         (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))
     => (printout t "Open the windows. It's hot inside." crlf))
@@ -112,3 +112,4 @@
     (soilHumidity {percentage < ?*soilMin*})
     => (printout t "Increase irrigation duration." crlf))
 
+;;untested rules
