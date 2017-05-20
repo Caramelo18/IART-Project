@@ -1,6 +1,8 @@
 package gui;
 
 import jess.swing.JTextAreaWriter;
+import nrc.fuzzy.FuzzyValue;
+import nrc.fuzzy.FuzzyVariable;
 import nrc.fuzzy.jess.FuzzyRete;
 import jess.*;
 
@@ -12,6 +14,8 @@ import javax.swing.*;
 public class Launcher {
 
     static FuzzyRete engine = new FuzzyRete();
+    static FuzzyVariable nightTemp;
+    static FuzzyVariable dayTemp;
 
     public static void main(String[] args){
 
@@ -22,9 +26,9 @@ public class Launcher {
         engine.addOutputRouter("t", taw);
         engine.addOutputRouter("WSTDOUT", taw);
         engine.addOutputRouter("WSTDERR", taw);
+        assignFuzzyValues(17, 22);
         try {
             engine.batch("rules/rules.clp");
-//            addEval("(defaultParams 20 22 14.5 17 7 18 50 5.5 6.5 40 60 60 80)");
         }catch (JessException e){
             e.printStackTrace();
         }
@@ -48,5 +52,41 @@ public class Launcher {
         }
     }
 
+    public static FuzzyVariable assignFuzzyValues(int maxCold, int minHot){
+        try {
+            // There are many ways to define the terms for the fuzzy variable
+            // Here we use 2 of those methods:
+            //   1. using arrays of x and y values to define the shape of the fuzzy set
+            //   2. using already defined terms of the fuzzy variable and linguistic
+            //      expressions
+            double xHot[] = {minHot, minHot + 10};
+            double yHot[] = {0, 1};
+            double xCold[] = {maxCold - 10, maxCold};
+            double yCold[] = {1, 0};
+            FuzzyValue fval = null;
 
+            // Create new fuzzy variable for temperature with Universe of discourse
+            // from 0 to 100 and units "C".
+            FuzzyVariable temp = new FuzzyVariable("temperature", 0, 40, "C");
+
+            // Add three terms hot, cold and medium
+            temp.addTerm("hot", xHot, yHot, 2);
+            temp.addTerm("cold", xCold, yCold, 2);
+            // Note: once a term is added it can be used to define other terms
+            temp.addTerm("medium", "not hot and not cold");
+
+            //return temp;
+
+            // Now we can define fuzzy values using the terms in the fuzzy variable.
+            // Note: fuzzy values can also be created using fuzzy sets, etc. and not
+            //       just with linguistic expressions.
+            fval = new FuzzyValue(temp, "very hot or cold");
+            String plot = fval.plotFuzzyValue("+");
+
+            System.out.println(plot);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

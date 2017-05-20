@@ -61,7 +61,6 @@
     (printout t "New configuration is in effect" crlf)
 )
 
-;;(params 20 22 14.5 17 7 18 50 5.5 6.5 40 60 60 80)
 
 (deftemplate temperature (slot celsius))
 (deftemplate timeDay (slot hours))

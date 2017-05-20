@@ -317,6 +317,7 @@
                   <paintTicks value="true"/>
                   <snapToTicks value="false"/>
                   <toolTipText value="Minimum pH"/>
+                  <value value="5"/>
                 </properties>
               </component>
               <component id="b3b22" class="javax.swing.JSlider" binding="phMax">
@@ -331,6 +332,7 @@
                   <paintTicks value="true"/>
                   <snapToTicks value="false"/>
                   <toolTipText value="Maximum pH"/>
+                  <value value="7"/>
                 </properties>
               </component>
               <component id="16ef0" class="javax.swing.JSlider" binding="windSpeed">
