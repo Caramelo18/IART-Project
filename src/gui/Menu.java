@@ -13,11 +13,14 @@ public class Menu extends JFrame{
     private JButton submitButton;
     private JPanel rootPanel;
     private JTextField temperature;
+    private JTextField outTemperature;
     private JButton exit;
     private JTextArea textArea;
     private JTextField ph;
     private JTextField wind;
+    private JTextField outWind;
     private JTextField airH;
+    private JTextField outAirH;
     private JTextField soilH;
     private JTextField conduct;
     private JComboBox timeList;
@@ -235,9 +238,9 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 Float[] params = Launcher.analyzeNewCity(city.getText());
                 if (params != null) {
-                    wind.setText(params[0].toString());
-                    airH.setText(params[1].toString());
-                    temperature.setText(params[2].toString());
+                    outWind.setText(params[0].toString());
+                    outAirH.setText(params[1].toString());
+                    outTemperature.setText(params[2].toString());
                     Calendar calendar = new GregorianCalendar();
                     timeList.setSelectedIndex(calendar.get(Calendar.HOUR_OF_DAY));
                 }else{
