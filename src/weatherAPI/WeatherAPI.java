@@ -1,34 +1,24 @@
 package weatherAPI;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.OpenWeatherMap;
 
-/**
- * Created by joliveira on 20/05/2017.
- */
 public class WeatherAPI {
 
     private String weatherCity;
-
-    private OpenWeatherMap.Units units;
-
     private OpenWeatherMap owm;
 
     private float temperature;
     private float humidity;
     private float windSpeed;
-    private int time;
 
     public WeatherAPI(boolean isMetric) throws IOException {
-        this.units =  (isMetric) ? OpenWeatherMap.Units.METRIC
+        OpenWeatherMap.Units units =  (isMetric) ? OpenWeatherMap.Units.METRIC
                                  : OpenWeatherMap.Units.IMPERIAL;
         String owmApiKey = "12157ac458c5e1cfcd8d5dbd1e368120";
 
-        this.owm = new OpenWeatherMap(this.units, owmApiKey);
+        this.owm = new OpenWeatherMap(units, owmApiKey);
     }
 
     public void refreshValues() throws IOException{
