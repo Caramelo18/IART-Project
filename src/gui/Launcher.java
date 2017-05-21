@@ -8,6 +8,7 @@ import nrc.fuzzy.jess.FuzzyRete;
 import weatherAPI.WeatherAPI;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.Date;
 
 public class Launcher {
@@ -123,7 +124,11 @@ public class Launcher {
     static Float[] analyzeNewCity(String city){
         Date date = new Date();
         weather.setWeatherCity(city);
-        weather.refreshValues();
+        try {
+            weather.refreshValues();
+        }catch(Exception e){
+            return null;
+        }
         Float[] params = new Float[3];
         params[0] = weather.getWindSpeed();
         params[1] = weather.getHumidity();

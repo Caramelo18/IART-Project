@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -82,66 +81,6 @@ public class Menu extends JFrame{
         setVisible(true);
 
         initButtons();
-        drawGraphsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                int numGraphs = 0;
-                String[] list;
-                boolean[] days;
-                if(activate1.isSelected())
-                    numGraphs++;
-                if(activate2.isSelected())
-                    numGraphs++;
-                if(activate3.isSelected())
-                    numGraphs++;
-                if(numGraphs == 0) return;
-                list = new String[numGraphs];
-                days = new boolean[numGraphs];
-                numGraphs = 0;
-
-                if(activate1.isSelected()){
-                    boolean day = dayRadio1.isSelected();
-                    String fuzzy = "";
-                    fuzzy += analyzeMain(not11, temp11);
-                    fuzzy += analyzeOptional(and11, not12, temp12);
-                    fuzzy += analyzeOptional(and12, not13, temp13);
-                    days[numGraphs] = day;
-                    list[numGraphs++] = fuzzy;
-                }
-                if(activate2.isSelected()){
-                    boolean day = dayRadio2.isSelected();
-                    String fuzzy = "";
-                    fuzzy += analyzeMain(not21, temp21);
-                    fuzzy += analyzeOptional(and21, not22, temp22);
-                    fuzzy += analyzeOptional(and22, not23, temp23);
-                    days[numGraphs] = day;
-                    list[numGraphs++] = fuzzy;
-                }
-                if(activate3.isSelected()){
-                    boolean day = dayRadio3.isSelected();
-                    String fuzzy = "";
-                    fuzzy += analyzeMain(not31, temp31);
-                    fuzzy += analyzeOptional(and31, not32, temp32);
-                    fuzzy += analyzeOptional(and32, not33, temp33);
-                    days[numGraphs] = day;
-                    list[numGraphs] = fuzzy;
-                }
-
-                String plot = Launcher.setFuzzyPlot(list, days);
-                stats.setText(plot);
-            }
-        });
-        getDataFromCityButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                Float[] params = Launcher.analyzeNewCity(city.getText());
-                wind.setText(params[0].toString());
-                airH.setText(params[1].toString());
-                temperature.setText(params[2].toString());
-                Calendar calendar = new GregorianCalendar();
-                timeList.setSelectedIndex(calendar.get(Calendar.HOUR_OF_DAY));
-            }
-        });
     }
 
     private void initButtons(){
@@ -238,6 +177,72 @@ public class Menu extends JFrame{
 
                 Launcher.setFuzzyTemp(true, dayTempMin.getValue(), dayTempMax.getValue());
                 Launcher.setFuzzyTemp(false, nightTempMin.getValue(), nightTempMax.getValue());
+            }
+        });
+
+        drawGraphsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int numGraphs = 0;
+                String[] list;
+                boolean[] days;
+                if(activate1.isSelected())
+                    numGraphs++;
+                if(activate2.isSelected())
+                    numGraphs++;
+                if(activate3.isSelected())
+                    numGraphs++;
+                if(numGraphs == 0) return;
+                list = new String[numGraphs];
+                days = new boolean[numGraphs];
+                numGraphs = 0;
+
+                if(activate1.isSelected()){
+                    boolean day = dayRadio1.isSelected();
+                    String fuzzy = "";
+                    fuzzy += analyzeMain(not11, temp11);
+                    fuzzy += analyzeOptional(and11, not12, temp12);
+                    fuzzy += analyzeOptional(and12, not13, temp13);
+                    days[numGraphs] = day;
+                    list[numGraphs++] = fuzzy;
+                }
+                if(activate2.isSelected()){
+                    boolean day = dayRadio2.isSelected();
+                    String fuzzy = "";
+                    fuzzy += analyzeMain(not21, temp21);
+                    fuzzy += analyzeOptional(and21, not22, temp22);
+                    fuzzy += analyzeOptional(and22, not23, temp23);
+                    days[numGraphs] = day;
+                    list[numGraphs++] = fuzzy;
+                }
+                if(activate3.isSelected()){
+                    boolean day = dayRadio3.isSelected();
+                    String fuzzy = "";
+                    fuzzy += analyzeMain(not31, temp31);
+                    fuzzy += analyzeOptional(and31, not32, temp32);
+                    fuzzy += analyzeOptional(and32, not33, temp33);
+                    days[numGraphs] = day;
+                    list[numGraphs++] = fuzzy;
+                }
+
+                String plot = Launcher.setFuzzyPlot(list, days);
+                stats.setText(plot);
+            }
+        });
+
+        getDataFromCityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Float[] params = Launcher.analyzeNewCity(city.getText());
+                if (params != null) {
+                    wind.setText(params[0].toString());
+                    airH.setText(params[1].toString());
+                    temperature.setText(params[2].toString());
+                    Calendar calendar = new GregorianCalendar();
+                    timeList.setSelectedIndex(calendar.get(Calendar.HOUR_OF_DAY));
+                }else{
+                    textArea.setText("Cannot find specified location");
+                }
             }
         });
     }

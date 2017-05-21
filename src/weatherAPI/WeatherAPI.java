@@ -31,25 +31,19 @@ public class WeatherAPI {
         this.owm = new OpenWeatherMap(this.units, owmApiKey);
     }
 
-    public void refreshValues(){
-        try {
-            CurrentWeather tempWeather = this.owm.currentWeatherByCityName(this.weatherCity);
+    public void refreshValues() throws IOException{
+        CurrentWeather tempWeather = this.owm.currentWeatherByCityName(this.weatherCity);
 
-            CurrentWeather.Main tempMainWeather = tempWeather.getMainInstance();
-            CurrentWeather.Wind tempWindWeather = tempWeather.getWindInstance();
+        CurrentWeather.Main tempMainWeather = tempWeather.getMainInstance();
+        CurrentWeather.Wind tempWindWeather = tempWeather.getWindInstance();
 
-            this.temperature = tempMainWeather.getTemperature();
-            this.humidity = tempMainWeather.getHumidity();
+        this.temperature = tempMainWeather.getTemperature();
+        this.humidity = tempMainWeather.getHumidity();
 
-            this.windSpeed = tempWindWeather.getWindSpeed();
+        this.windSpeed = tempWindWeather.getWindSpeed();
 
-            //convert from m/s to km/h
-            this.windSpeed *= 3.6;
-
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        //convert from m/s to km/h
+        this.windSpeed *= 3.6;
     }
 
     public float getTemperature() {
