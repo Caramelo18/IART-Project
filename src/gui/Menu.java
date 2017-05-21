@@ -101,80 +101,84 @@ public class Menu extends JFrame{
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                textArea.setText("");
-                if(!temperature.getText().isEmpty()){
-                    double temp = new Double(temperature.getText());
-                    if(temp < 0 || temp > 40){
-                        textArea.setText("Invalid temperature");
-                        validInput = false;
+                try {
+                    textArea.setText("");
+                    if (!temperature.getText().isEmpty()) {
+                        double temp = new Double(temperature.getText());
+                        if (temp < 0 || temp > 40) {
+                            textArea.setText("Invalid temperature");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (temperature (celsius " + temperature.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (temperature (celsius " + temperature.getText() + ")))");
-                }
-                if(!outTemperature.getText().isEmpty()){
-                    double temp = new Double(outTemperature.getText());
-                    if(temp < -10 || temp > 50){
-                        textArea.setText("Invalid outside temperature");
-                        validInput = false;
+                    if (!outTemperature.getText().isEmpty()) {
+                        double temp = new Double(outTemperature.getText());
+                        if (temp < -10 || temp > 50) {
+                            textArea.setText("Invalid outside temperature");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (outsideTemperature (celsius " + temperature.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (outsideTemperature (celsius " + temperature.getText() + ")))");
-                }
-                //if(timeList.){
+                    //if(timeList.){
                     String tmp = timeList.getSelectedItem().toString();
                     Launcher.addEval("(assert (timeDay (hours " + tmp + ")))");
-               // }
-                if(!ph.getText().isEmpty()){
-                    double phval = new Double(ph.getText());
-                    if(phval < 0.0 || phval > 14.0){
-                        textArea.setText("Invalid pH");
-                        validInput = false;
+                    // }
+                    if (!ph.getText().isEmpty()) {
+                        double phval = new Double(ph.getText());
+                        if (phval < 0.0 || phval > 14.0) {
+                            textArea.setText("Invalid pH");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (phWater (ph " + ph.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (phWater (ph " + ph.getText() + ")))");
-                }
-                if(!wind.getText().isEmpty()){
-                    double windVal = new Double(wind.getText());
-                    if(windVal < 0 || windVal > 150){
-                        textArea.setText("Invalid wind speed");
-                        validInput = false;
+                    if (!wind.getText().isEmpty()) {
+                        double windVal = new Double(wind.getText());
+                        if (windVal < 0 || windVal > 150) {
+                            textArea.setText("Invalid wind speed");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (windSpeed (velocity " + wind.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (windSpeed (velocity " + wind.getText() + ")))");
-                }
-                if(!airH.getText().isEmpty()){
-                    double airHVal = new Double(airH.getText());
-                    if(airHVal < 0 || airHVal > 100){
-                        textArea.setText("Invalid air humidity");
-                        validInput = false;
+                    if (!airH.getText().isEmpty()) {
+                        double airHVal = new Double(airH.getText());
+                        if (airHVal < 0 || airHVal > 100) {
+                            textArea.setText("Invalid air humidity");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
-                }
-                if(!outAirH.getText().isEmpty()){
-                    double airHVal = new Double(outAirH.getText());
-                    if(airHVal < 0 || airHVal > 100){
-                        textArea.setText("Invalid outside air humidity");
-                        validInput = false;
+                    if (!outAirH.getText().isEmpty()) {
+                        double airHVal = new Double(outAirH.getText());
+                        if (airHVal < 0 || airHVal > 100) {
+                            textArea.setText("Invalid outside air humidity");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (outsideAirHumidity (percentage " + outAirH.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (outsideAirHumidity (percentage " + outAirH.getText() + ")))");
-                }
-                if(!soilH.getText().isEmpty()){
-                    double soilHVal = new Double(soilH.getText());
-                    if(soilHVal < 0 || soilHVal > 40){
-                        textArea.setText("Invalid soil humidity");
-                        validInput = false;
+                    if (!soilH.getText().isEmpty()) {
+                        double soilHVal = new Double(soilH.getText());
+                        if (soilHVal < 0 || soilHVal > 40) {
+                            textArea.setText("Invalid soil humidity");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (soilHumidity (percentage " + soilH.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (soilHumidity (percentage " + soilH.getText() + ")))");
-                }
-                if(!conduct.getText().isEmpty()){
-                    double conductVal = new Double(conduct.getText());
-                    if(conductVal < 0 || conductVal > 100){
-                        textArea.setText("Invalid conductivity");
-                        validInput = false;
+                    if (!conduct.getText().isEmpty()) {
+                        double conductVal = new Double(conduct.getText());
+                        if (conductVal < 0 || conductVal > 100) {
+                            textArea.setText("Invalid conductivity");
+                            validInput = false;
+                        }
+                        Launcher.addEval("(assert (conductivity (water " + conduct.getText() + ")))");
                     }
-                    Launcher.addEval("(assert (conductivity (water " + conduct.getText() + ")))");
-                }
 
-                if(validInput)
-                    Launcher.run(true);
-                else
-                    validInput = true;
+                    if (validInput)
+                        Launcher.run(true);
+                    else
+                        validInput = true;
+                }catch(NumberFormatException e){
+                    textArea.setText("Input field can't read letters. \nOnly numbers at the exception of the last field which takes cities as inputs.");
+                }
             }
         });
 
