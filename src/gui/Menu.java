@@ -7,9 +7,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.UIManager;
 
-/**
- * Created by fabio on 08-05-2017.
- */
 public class Menu extends JFrame{
     private JButton submitButton;
     private JPanel rootPanel;
@@ -75,7 +72,7 @@ public class Menu extends JFrame{
 
     private boolean validInput = true;
 
-    public Menu(){
+    Menu(){
         super("IART -  Sistema de Regras IOT");
 
         try{
@@ -273,12 +270,8 @@ public class Menu extends JFrame{
         });
     }
 
-    public JTextArea getTextArea(){
+    JTextArea getTextArea(){
         return textArea;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 
     private String analyzeMain(JComboBox notBox, JComboBox tempBox){
@@ -293,7 +286,7 @@ public class Menu extends JFrame{
     private String analyzeOptional(JComboBox andBox, JComboBox notBox, JComboBox tempBox){
         String fuzzy = "";
         if(!andBox.getSelectedItem().toString().isEmpty()){
-            fuzzy += " " + and11.getSelectedItem().toString() + " ";
+            fuzzy += " " + andBox.getSelectedItem().toString() + " ";
             fuzzy += analyzeMain(notBox, tempBox);
         }
         return fuzzy;
