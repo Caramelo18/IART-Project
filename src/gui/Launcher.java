@@ -1,10 +1,11 @@
 package gui;
 
+import jess.JessException;
 import jess.swing.JTextAreaWriter;
 import nrc.fuzzy.FuzzyValue;
 import nrc.fuzzy.FuzzyVariable;
 import nrc.fuzzy.jess.FuzzyRete;
-import jess.*;
+import weatherAPI.WeatherAPI;
 
 import javax.swing.*;
 
@@ -17,6 +18,7 @@ public class Launcher {
     static Menu m;
     static FuzzyVariable nightTemp;
     static FuzzyVariable dayTemp;
+    WeatherAPI weather;
 
     public static void main(String[] args){
 
