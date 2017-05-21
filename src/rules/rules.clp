@@ -39,7 +39,7 @@
     (bind ?*outTemp* ?voutTemp)
     (bind ?*outAirHum* ?voutAirHum)
     (bind ?*outWind* ?voutWind)
-    (printout t "Weather updated! " ?*outTemp* " " ?*outAirHum* crlf))
+    (printout t "Weather updated!" crlf))
 
 (deftemplate temperature
         (slot celsius))
@@ -90,12 +90,22 @@
                 (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
     => (printout t "It's cold inside and colder outside. Close the windows and turn on the heaters" crlf))
 
-(defrule coldInsideHotterOutside
-    (and (temperature {celsius > ?*outTemp*})
-         (or (and (temperature {celsius < ?*dayTempMin*})
-                (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-            (and (temperature {celsius < ?*nightTempMin*})
-                (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
+(defrule coldInsideHotterOutsideWindy
+    (and (windSpeed {velocity >= ?*wind*})
+         (and (temperature {celsius <= ?*outTemp*})
+              (or (and (temperature {celsius < ?*dayTempMin*})
+                       (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+                  (and (temperature {celsius < ?*nightTempMin*})
+                       (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))))
+    => (printout t "It's cold inside but hotter outside and windy. Close the windows and turn on the heaters" crlf))
+
+(defrule coldInsideHotterOutsideNotWindy
+    (and (windSpeed {velocity < ?*wind*})
+        (and (temperature {celsius <= ?*outTemp*})
+             (or (and (temperature {celsius < ?*dayTempMin*})
+                    (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+                (and (temperature {celsius < ?*nightTempMin*})
+                    (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))))
     => (printout t "It's cold inside but hotter outside. Open the windows" crlf))
 
 (defrule windy
