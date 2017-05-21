@@ -113,6 +113,14 @@ public class Menu extends JFrame{
                     }
                     Launcher.addEval("(assert (temperature (celsius " + temperature.getText() + ")))");
                 }
+                if(!outTemperature.getText().isEmpty()){
+                    double temp = new Double(outTemperature.getText());
+                    if(temp < -10 || temp > 50){
+                        textArea.setText("Invalid outside temperature");
+                        validInput = false;
+                    }
+                    Launcher.addEval("(assert (outsideTemperature (celsius " + temperature.getText() + ")))");
+                }
                 //if(timeList.){
                     String tmp = timeList.getSelectedItem().toString();
                     Launcher.addEval("(assert (timeDay (hours " + tmp + ")))");
@@ -141,6 +149,14 @@ public class Menu extends JFrame{
                     }
                     Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
                 }
+                if(!outAirH.getText().isEmpty()){
+                    double airHVal = new Double(outAirH.getText());
+                    if(airHVal < 0 || airHVal > 100){
+                        textArea.setText("Invalid outside air humidity");
+                        validInput = false;
+                    }
+                    Launcher.addEval("(assert (outsideAirHumidity (percentage " + outAirH.getText() + ")))");
+                }
                 if(!soilH.getText().isEmpty()){
                     double soilHVal = new Double(soilH.getText());
                     if(soilHVal < 0 || soilHVal > 40){
@@ -151,7 +167,7 @@ public class Menu extends JFrame{
                 }
                 if(!conduct.getText().isEmpty()){
                     double conductVal = new Double(conduct.getText());
-                    if(conductVal < 0 || conductVal > 40){
+                    if(conductVal < 0 || conductVal > 100){
                         textArea.setText("Invalid conductivity");
                         validInput = false;
                     }

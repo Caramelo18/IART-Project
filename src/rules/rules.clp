@@ -63,10 +63,12 @@
 
 
 (deftemplate temperature (slot celsius))
+(deftemplate outsideTemperature (slot celsius))
 (deftemplate timeDay (slot hours))
 (deftemplate phWater (slot ph))
 (deftemplate windSpeed (slot velocity))
 (deftemplate airHumidity (slot percentage))
+(deftemplate outsideAirHumidity (slot percentage))
 (deftemplate soilHumidity (slot percentage))
 (deftemplate conductivity (slot water))
 
@@ -113,3 +115,5 @@
     => (printout t "Increase irrigation duration." crlf))
 
 ;;untested rules
+
+
