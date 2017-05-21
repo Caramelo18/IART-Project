@@ -1,16 +1,9 @@
 package gui;
 
+import jess.JessException;
 import jess.swing.JTextAreaWriter;
-import nrc.fuzzy.FuzzyValue;
 import nrc.fuzzy.FuzzyVariable;
 import nrc.fuzzy.jess.FuzzyRete;
-import jess.*;
-import net.aksingh.owmjapis.DailyForecast;
-import org.codehaus.jettison.json.JSONException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import net.aksingh.owmjapis.CurrentWeather;
-import net.aksingh.owmjapis.OpenWeatherMap;
 
 import javax.swing.*;
 
@@ -23,6 +16,7 @@ public class Launcher {
     static Menu m;
     static FuzzyVariable nightTemp;
     static FuzzyVariable dayTemp;
+    WeatherAPI weather = new WeatherAPI();
 
     public static void main(String[] args){
 
