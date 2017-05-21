@@ -14,35 +14,9 @@
 (defglobal ?*soilMax* = 60)
 (defglobal ?*airMin* = 60)
 (defglobal ?*airMax* = 80)
-
-/*
-(defglobal ?*fuzzy-temp* = (new nrc.fuzzy.FuzzyVariable "temp" 0.0 40.0 "C"))
-(defglobal ?*fuzzy-time* = (new nrc.fuzzy.FuzzyVariable "time" 0.0 24.0 "h"))
-
-(defrule init
-    =>
-    (load-package nrc.fuzzy.jess.FuzzyFunctions)
-    ;; temperature
-    (bind ?xHot (create$ 22.0 40.0))
-    (bind ?yHot (create$ 0.0 1.0))
-    (bind ?xCold (create$ 0.0 20.0))
-    (bind ?yCold (create$ 1.0 0.0))
-    (bind ?xNice (create$ 20.0 22.0))
-    (bind ?yNice (create$ 1.0 1.0))
-    (?*fuzzy-temp* addTerm "hot" ?xHot ?yHot 2)
-    (?*fuzzy-temp* addTerm "cold" ?xCold ?yCold 2)
-    (?*fuzzy-temp* addTerm "nice" ?xNice ?yNice 2)
-    (assert (theTemp (new nrc.fuzzy.FuzzyValue ?*fuzzy-temp* "very medium")))
-
-    ;; time of day
-    (bind ?xDay (create$ 7.0 19.0))
-    (bind ?yDay (create$ 1.0 1.0))
-    (bind ?xNight (create$ 0.0 7.0))
-    (bind ?yNight (create$ 0.0 1.0))
-    (bind ?xNight1 (create$ 19.0 24.0))
-    (bind ?yNight1 (create$ 1.0 0.0))
-)
-*/
+(defglobal ?*outTemp* = 25)
+(defglobal ?*outAirHum* = 50)
+(defglobal ?*outWind* = 10)
 
 (deffunction params (?vdayTempMin ?vdayTempMax ?vnightTempMin ?vnightTempMax ?vtimeMin ?vtimeMax ?vwind ?vpHMin ?vpHMax ?vsoilMin ?vsoilMax ?vairMin ?vairMax)
     (bind ?*dayTempMin* ?vdayTempMin)
@@ -61,30 +35,58 @@
     (printout t "New configuration is in effect" crlf)
 )
 
+(deffunction params2 (?voutTemp ?voutAirHum ?voutWind)
+    (bind ?*outTemp* ?voutTemp)
+    (bind ?*outAirHum* ?voutAirHum)
+    (bind ?*outWind* ?voutWind)
+    (printout t "Weather updated! " ?*outTemp* " " ?*outAirHum* crlf))
 
-(deftemplate temperature (slot celsius))
-(deftemplate outsideTemperature (slot celsius))
-(deftemplate timeDay (slot hours))
-(deftemplate phWater (slot ph))
-(deftemplate windSpeed (slot velocity))
-(deftemplate airHumidity (slot percentage))
-(deftemplate outsideAirHumidity (slot percentage))
-(deftemplate soilHumidity (slot percentage))
-(deftemplate conductivity (slot water))
+(deftemplate temperature
+        (slot celsius))
+(deftemplate timeDay
+        (slot hours))
+(deftemplate phWater
+        (slot ph))
+(deftemplate windSpeed
+        (slot velocity))
+(deftemplate airHumidity
+        (slot percentage))
+(deftemplate soilHumidity
+        (slot percentage))
+(deftemplate conductivity
+        (slot water))
 
-(defrule hotInside
-    (or (and (temperature {celsius >= ?*dayTempMax*})
-             (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-        (and (temperature {celsius >= ?*nightTempMax*})
-        (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))
-    => (printout t "Open the windows. It's hot inside." crlf))
+(defrule hotInsideColderOutside
+    (and (temperature {celsius > ?*outTemp*})
+         (or (and (temperature {celsius >= ?*dayTempMax*})
+                  (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+             (and (temperature {celsius >= ?*nightTempMax*})
+             (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
+    => (printout t "It's hot inside and colder outside. Open the windows." crlf))
 
-(defrule coldInside
-    (or (and (temperature {celsius < ?*dayTempMin*})
-            (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-        (and (temperature {celsius < ?*nightTempMin*})
-            (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))
-    => (printout t "Close the windows. It's cold inside." crlf))
+(defrule hotInsideHotterOutside
+    (and (temperature {celsius < ?*outTemp*})
+         (or (and (temperature {celsius > ?*dayTempMax*})
+                  (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+             (and (temperature {celsius >= ?*nightTempMax*})
+             (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
+    => (printout t "It's hot inside but hotter outside. Keep windows closed and turn on cooling fans. " crlf))
+
+(defrule coldInsideColderOutside
+    (and (temperature {celsius > ?*outTemp*})
+         (or (and (temperature {celsius < ?*dayTempMin*})
+                (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+            (and (temperature {celsius < ?*nightTempMin*})
+                (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
+    => (printout t "It's cold inside and colder outside. Close the windows and turn on the heaters" crlf))
+
+(defrule coldInsideHotterOutside
+    (and (temperature {celsius > ?*outTemp*})
+         (or (and (temperature {celsius < ?*dayTempMin*})
+                (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+            (and (temperature {celsius < ?*nightTempMin*})
+                (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
+    => (printout t "It's cold inside but hotter outside. Open the windows" crlf))
 
 (defrule windy
     (windSpeed {velocity >= ?*wind*})
@@ -114,6 +116,10 @@
     (soilHumidity {percentage < ?*soilMin*})
     => (printout t "Increase irrigation duration." crlf))
 
-;;untested rules
+(defrule lowWaterCond
+    (conductivity {water < 2})
+    => (printout t "Water's conductivity too low. Increase nutrients in irrigation water." crlf))
 
-
+(defrule highWaterCond
+    (conductivity {water > 3})
+    => (printout t "Water's conductivity too high. Decrease nutrients in irrigation water." crlf))

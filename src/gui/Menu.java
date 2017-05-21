@@ -71,6 +71,7 @@ public class Menu extends JFrame{
     private JButton getDataFromCityButton;
 
     private boolean validInput = true;
+    private boolean validWeatherInput = true;
 
     Menu(){
         super("IART -  Sistema de Regras IOT");
@@ -91,6 +92,7 @@ public class Menu extends JFrame{
     }
 
     private void initButtons(){
+
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -101,8 +103,27 @@ public class Menu extends JFrame{
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 try {
                     textArea.setText("");
+                    validWeatherInput = true;
+                    if (outAirH.getText().isEmpty()
+                         || outTemperature.getText().isEmpty()
+                         || wind.getText().isEmpty()){
+                        validWeatherInput = false;
+                    }
+
+                    if(validWeatherInput){
+                        String rule = "(params2 " + outTemperature.getText()
+                                + " " + outAirH.getText()
+                                + " " + wind.getText()
+                                + ")";
+                        Launcher.addEval(rule);
+                        Launcher.run(false);
+                    } else {
+                        textArea.setText("Invalid weather conditions\n");
+                    }
+
                     if (!temperature.getText().isEmpty()) {
                         double temp = new Double(temperature.getText());
                         if (temp < 0 || temp > 40) {
@@ -110,14 +131,6 @@ public class Menu extends JFrame{
                             validInput = false;
                         }
                         Launcher.addEval("(assert (temperature (celsius " + temperature.getText() + ")))");
-                    }
-                    if (!outTemperature.getText().isEmpty()) {
-                        double temp = new Double(outTemperature.getText());
-                        if (temp < -10 || temp > 50) {
-                            textArea.setText("Invalid outside temperature");
-                            validInput = false;
-                        }
-                        Launcher.addEval("(assert (outsideTemperature (celsius " + temperature.getText() + ")))");
                     }
                     //if(timeList.){
                     String tmp = timeList.getSelectedItem().toString();
@@ -146,14 +159,6 @@ public class Menu extends JFrame{
                             validInput = false;
                         }
                         Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
-                    }
-                    if (!outAirH.getText().isEmpty()) {
-                        double airHVal = new Double(outAirH.getText());
-                        if (airHVal < 0 || airHVal > 100) {
-                            textArea.setText("Invalid outside air humidity");
-                            validInput = false;
-                        }
-                        Launcher.addEval("(assert (outsideAirHumidity (percentage " + outAirH.getText() + ")))");
                     }
                     if (!soilH.getText().isEmpty()) {
                         double soilHVal = new Double(soilH.getText());
@@ -267,6 +272,13 @@ public class Menu extends JFrame{
                     outTemperature.setText(params[2].toString());
                     Calendar calendar = new GregorianCalendar();
                     timeList.setSelectedIndex(calendar.get(Calendar.HOUR_OF_DAY));
+
+                    String rule = "(params2 " + outTemperature.getText()
+                                    + " " + outAirH.getText()
+                                    + " " + wind.getText()
+                                    + ")";
+                    Launcher.addEval(rule);
+                    Launcher.run(false);
                 }else{
                     textArea.setText("Cannot find specified location");
                 }
