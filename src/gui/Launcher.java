@@ -5,6 +5,12 @@ import nrc.fuzzy.FuzzyValue;
 import nrc.fuzzy.FuzzyVariable;
 import nrc.fuzzy.jess.FuzzyRete;
 import jess.*;
+import net.aksingh.owmjapis.DailyForecast;
+import org.codehaus.jettison.json.JSONException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import net.aksingh.owmjapis.CurrentWeather;
+import net.aksingh.owmjapis.OpenWeatherMap;
 
 import javax.swing.*;
 
