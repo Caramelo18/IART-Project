@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.UIManager;
 
 /**
  * Created by fabio on 08-05-2017.
@@ -77,6 +78,13 @@ public class Menu extends JFrame{
 
     public Menu(){
         super("IART -  Sistema de Regras IOT");
+
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }  catch (IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         setContentPane(rootPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
         setSize(1000, 600);
