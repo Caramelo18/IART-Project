@@ -1,16 +1,15 @@
-import net.aksingh.owmjapis.DailyForecast;
-import net.aksingh.owmjapis.HourlyForecast;
-import org.codehaus.jettison.json.JSONException;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import net.aksingh.owmjapis.CurrentWeather;
+import net.aksingh.owmjapis.DailyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;
+import org.json.JSONException;
+
+import java.io.IOException;
 
 /**
  * Created by joliveira on 20/05/2017.
  */
 public class testWeatherAPI      {
-    public static void main(String[] args) throws IOException, MalformedURLException, JSONException {
+    public static void main(String[] args) throws IOException, JSONException {
         boolean isMetric = true;
         String owmApiKey = "12157ac458c5e1cfcd8d5dbd1e368120";
         String weatherCity = "Porto";

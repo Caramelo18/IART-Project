@@ -1,9 +1,5 @@
 package gui;
 
-import nrc.fuzzy.FuzzyValue;
-import nrc.fuzzy.FuzzyVariable;
-import nrc.fuzzy.InvalidLinguisticExpressionException;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,7 +81,8 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int numGraphs = 0;
-                FuzzyValue[] list;
+                String[] list;
+                boolean[] days;
                 if(activate1.isSelected())
                     numGraphs++;
                 if(activate2.isSelected())
@@ -93,7 +90,8 @@ public class Menu extends JFrame{
                 if(activate3.isSelected())
                     numGraphs++;
                 if(numGraphs == 0) return;
-                list = new FuzzyValue[numGraphs];
+                list = new String[numGraphs];
+                days = new boolean[numGraphs];
                 numGraphs = 0;
 
                 if(activate1.isSelected()){
@@ -102,7 +100,8 @@ public class Menu extends JFrame{
                     fuzzy += analyzeMain(not11, temp11);
                     fuzzy += analyzeOptional(and11, not12, temp12);
                     fuzzy += analyzeOptional(and12, not13, temp13);
-                    list[numGraphs++] = initStats(day, fuzzy);
+                    days[numGraphs] = day;
+                    list[numGraphs++] = fuzzy;
                 }
                 if(activate2.isSelected()){
                     boolean day = dayRadio2.isSelected();
@@ -110,7 +109,8 @@ public class Menu extends JFrame{
                     fuzzy += analyzeMain(not21, temp21);
                     fuzzy += analyzeOptional(and21, not22, temp22);
                     fuzzy += analyzeOptional(and22, not23, temp23);
-                    list[numGraphs++] = initStats(day, fuzzy);
+                    days[numGraphs] = day;
+                    list[numGraphs++] = fuzzy;
                 }
                 if(activate3.isSelected()){
                     boolean day = dayRadio3.isSelected();
@@ -118,10 +118,11 @@ public class Menu extends JFrame{
                     fuzzy += analyzeMain(not31, temp31);
                     fuzzy += analyzeOptional(and31, not32, temp32);
                     fuzzy += analyzeOptional(and32, not33, temp33);
-                    list[numGraphs] = initStats(day, fuzzy);
+                    days[numGraphs] = day;
+                    list[numGraphs] = fuzzy;
                 }
 
-                String plot = list[0].plotFuzzyValues("+-*", list);
+                String plot = Launcher.setFuzzyPlot(list, days);
                 stats.setText(plot);
             }
         });
@@ -219,8 +220,8 @@ public class Menu extends JFrame{
                 Launcher.addEval(rule);
                 Launcher.run(false);
 
-                Launcher.dayTemp = Launcher.assignFuzzyValues(dayTempMin.getValue(), dayTempMax.getValue());
-                Launcher.nightTemp = Launcher.assignFuzzyValues(nightTempMin.getValue(), nightTempMax.getValue());
+                Launcher.setFuzzyTemp(true, dayTempMin.getValue(), dayTempMax.getValue());
+                Launcher.setFuzzyTemp(false, nightTempMin.getValue(), nightTempMax.getValue());
             }
         });
     }
@@ -231,22 +232,6 @@ public class Menu extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-    }
-
-    private FuzzyValue initStats(boolean day, String expression){
-        FuzzyVariable temp;
-        FuzzyValue fval = null;
-        if(day)
-            temp = Launcher.dayTemp;
-        else temp = Launcher.nightTemp;
-        try {
-            fval = new FuzzyValue(temp, expression);
-            String plot = fval.plotFuzzyValue("+*-");
-            stats.setText(plot);
-        }catch(InvalidLinguisticExpressionException e){
-            e.printStackTrace();
-        }
-        return fval;
     }
 
     private String analyzeMain(JComboBox notBox, JComboBox tempBox){

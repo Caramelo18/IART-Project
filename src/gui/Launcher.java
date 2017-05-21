@@ -89,4 +89,31 @@ public class Launcher {
         }
         return null;
     }
+
+    public static void setFuzzyTemp(boolean day, int maxCold, int minHot){
+        if(day){
+            dayTemp = assignFuzzyValues(maxCold, minHot);
+        } else{
+            nightTemp = assignFuzzyValues(maxCold, minHot);
+        }
+    }
+
+    public static String setFuzzyPlot(String[] list, boolean[] days){
+        String plot;
+        FuzzyVariable temp;
+
+        FuzzyValue[] values = new FuzzyValue[list.length];
+        try {
+            for (int i = 0; i < list.length; i++) {
+                if (days[i])
+                    temp = Launcher.dayTemp;
+                else temp = Launcher.nightTemp;
+                values[i] = new FuzzyValue(temp, list[i]);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        plot = values[0].plotFuzzyValues("+-*", values);
+        return plot;
+    }
 }
