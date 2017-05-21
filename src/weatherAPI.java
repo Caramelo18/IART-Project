@@ -40,6 +40,9 @@ public class weatherAPI {
 
             this.windSpeed = tempWindWeather.getWindSpeed();
 
+            //convert from m/s to km/h
+            this.windSpeed *= 3.6;
+
 
         } catch (IOException e){
             e.printStackTrace();
@@ -57,6 +60,9 @@ public class weatherAPI {
             this.humidity = tempMainWeather.getHumidity();
 
             this.windSpeed = tempWindWeather.getWindSpeed();
+
+            //convert from m/s to km/h
+            this.windSpeed *= 3.6;
 
 
         } catch (IOException e){
