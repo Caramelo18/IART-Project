@@ -3,6 +3,9 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by fabio on 08-05-2017.
@@ -65,6 +68,8 @@ public class Menu extends JFrame{
     private JComboBox temp32;
     private JComboBox temp33;
     private JRadioButton dayRadio2;
+    private JTextField city;
+    private JButton getDataFromCityButton;
 
     private boolean validInput = true;
 
@@ -126,6 +131,17 @@ public class Menu extends JFrame{
                 stats.setText(plot);
             }
         });
+        getDataFromCityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Float[] params = Launcher.analyzeNewCity(city.getText());
+                wind.setText(params[0].toString());
+                airH.setText(params[1].toString());
+                temperature.setText(params[2].toString());
+                Calendar calendar = new GregorianCalendar();
+                timeList.setSelectedIndex(calendar.get(Calendar.HOUR_OF_DAY));
+            }
+        });
     }
 
     private void initButtons(){
@@ -141,7 +157,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 textArea.setText("");
                 if(!temperature.getText().isEmpty()){
-                    int temp = new Integer(temperature.getText());
+                    double temp = new Double(temperature.getText());
                     if(temp < 0 || temp > 40){
                         textArea.setText("Invalid temperature");
                         validInput = false;
@@ -161,7 +177,7 @@ public class Menu extends JFrame{
                     Launcher.addEval("(assert (phWater (ph " + ph.getText() + ")))");
                 }
                 if(!wind.getText().isEmpty()){
-                    int windVal = new Integer(wind.getText());
+                    double windVal = new Double(wind.getText());
                     if(windVal < 0 || windVal > 150){
                         textArea.setText("Invalid wind speed");
                         validInput = false;
@@ -169,7 +185,7 @@ public class Menu extends JFrame{
                     Launcher.addEval("(assert (windSpeed (velocity " + wind.getText() + ")))");
                 }
                 if(!airH.getText().isEmpty()){
-                    int airHVal = new Integer(airH.getText());
+                    double airHVal = new Double(airH.getText());
                     if(airHVal < 0 || airHVal > 100){
                         textArea.setText("Invalid air humidity");
                         validInput = false;
@@ -177,7 +193,7 @@ public class Menu extends JFrame{
                     Launcher.addEval("(assert (airHumidity (percentage " + airH.getText() + ")))");
                 }
                 if(!soilH.getText().isEmpty()){
-                    int soilHVal = new Integer(soilH.getText());
+                    double soilHVal = new Double(soilH.getText());
                     if(soilHVal < 0 || soilHVal > 40){
                         textArea.setText("Invalid soil humidity");
                         validInput = false;
@@ -185,7 +201,7 @@ public class Menu extends JFrame{
                     Launcher.addEval("(assert (soilHumidity (percentage " + soilH.getText() + ")))");
                 }
                 if(!conduct.getText().isEmpty()){
-                    int conductVal = new Integer(conduct.getText());
+                    double conductVal = new Double(conduct.getText());
                     if(conductVal < 0 || conductVal > 40){
                         textArea.setText("Invalid conductivity");
                         validInput = false;

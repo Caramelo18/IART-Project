@@ -8,23 +8,24 @@ import nrc.fuzzy.jess.FuzzyRete;
 import weatherAPI.WeatherAPI;
 
 import javax.swing.*;
+import java.util.Date;
 
-/**
- * Created by fabio on 05-05-2017.
- */
 public class Launcher {
 
-    static FuzzyRete engine = new FuzzyRete();
-    static Menu m;
-    static FuzzyVariable nightTemp;
-    static FuzzyVariable dayTemp;
-    WeatherAPI weather;
+    private static FuzzyRete engine = new FuzzyRete();
+    private static FuzzyVariable nightTemp;
+    private static FuzzyVariable dayTemp;
+    private static WeatherAPI weather;
 
     public static void main(String[] args){
-
+        try {
+            weather = new WeatherAPI(true);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         nightTemp = assignFuzzyValues(14, 17);
         dayTemp = assignFuzzyValues(20, 22);
-        m = new Menu();
+        Menu m = new Menu();
         JTextArea results = m.getTextArea();
         JTextAreaWriter taw = new JTextAreaWriter((results));
         engine.addOutputRouter("t", taw);
@@ -38,7 +39,7 @@ public class Launcher {
         }
     }
 
-    public static void addEval(String rule){
+    static void addEval(String rule){
         try {
             engine.eval(rule);
         }catch(JessException e){
@@ -46,7 +47,7 @@ public class Launcher {
         }
     }
 
-    public static void run(boolean reset){
+    static void run(boolean reset){
         try {
             engine.run();
             if(reset)
@@ -56,7 +57,7 @@ public class Launcher {
         }
     }
 
-    public static FuzzyVariable assignFuzzyValues(int maxCold, int minHot){
+    private static FuzzyVariable assignFuzzyValues(int maxCold, int minHot){
         try {
             // There are many ways to define the terms for the fuzzy variable
             // Here we use 2 of those methods:
@@ -92,7 +93,7 @@ public class Launcher {
         return null;
     }
 
-    public static void setFuzzyTemp(boolean day, int maxCold, int minHot){
+    static void setFuzzyTemp(boolean day, int maxCold, int minHot){
         if(day){
             dayTemp = assignFuzzyValues(maxCold, minHot);
         } else{
@@ -100,7 +101,7 @@ public class Launcher {
         }
     }
 
-    public static String setFuzzyPlot(String[] list, boolean[] days){
+    static String setFuzzyPlot(String[] list, boolean[] days){
         String plot;
         FuzzyVariable temp;
 
@@ -117,5 +118,16 @@ public class Launcher {
         }
         plot = values[0].plotFuzzyValues("+-*", values);
         return plot;
+    }
+
+    static Float[] analyzeNewCity(String city){
+        Date date = new Date();
+        weather.setWeatherCity(city);
+        weather.refreshValues();
+        Float[] params = new Float[3];
+        params[0] = weather.getWindSpeed();
+        params[1] = weather.getHumidity();
+        params[2] = weather.getTemperature();
+        return params;
     }
 }
