@@ -56,13 +56,23 @@
 (deftemplate conductivity
         (slot water))
 
-(defrule hotInsideColderOutside
-    (and (temperature {celsius > ?*outTemp*})
-         (or (and (temperature {celsius >= ?*dayTempMax*})
-                  (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
-             (and (temperature {celsius >= ?*nightTempMax*})
-             (timeDay { hours > ?*timeMax* || hours < ?*timeMin*}))))
-    => (printout t "It's hot inside and colder outside. Open the windows." crlf))
+(defrule hotInsideColderOutsideNotWindy
+        (and (windSpeed {velocity < ?*wind*})
+              (and (temperature {celsius > ?*outTemp*})
+                   (or (and (temperature {celsius >= ?*dayTempMax*})
+                            (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+                       (and (temperature {celsius >= ?*nightTempMax*})
+                            (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))))
+        => (printout t "It's hot inside and colder outside. Open windows." crlf))
+
+(defrule hotInsideColderOutsideWindy
+        (and (windSpeed {velocity >= ?*wind*})
+              (and (temperature {celsius > ?*outTemp*})
+                   (or (and (temperature {celsius >= ?*dayTempMax*})
+                            (timeDay { hours < ?*timeMax* && hours > ?*timeMin*}))
+                       (and (temperature {celsius >= ?*nightTempMax*})
+                            (timeDay { hours > ?*timeMax* || hours < ?*timeMin*})))))
+        => (printout t "It's hot inside and colder outside but windy. Keep windows closed and turn on cooling fans." crlf))
 
 (defrule hotInsideHotterOutside
     (and (temperature {celsius < ?*outTemp*})
