@@ -16,14 +16,17 @@ public class testWeatherAPI      {
         String weatherCity = "Porto";
         byte forecastDays = 3;
 
-        OpenWeatherMap.Units units = (isMetric)
-                ? OpenWeatherMap.Units.METRIC
-                : OpenWeatherMap.Units.IMPERIAL;
+        OpenWeatherMap.Units units = (isMetric) ? OpenWeatherMap.Units.METRIC
+                                                : OpenWeatherMap.Units.IMPERIAL;
         OpenWeatherMap owm = new OpenWeatherMap(units, owmApiKey);
+
         try {
             DailyForecast forecast = owm.dailyForecastByCityName(weatherCity, forecastDays);
+
             System.out.println("Weather for: " + forecast.getCityInstance().getCityName());
+
             int numForecasts = forecast.getForecastCount();
+
             for (int i = 0; i < numForecasts; i++) {
                 DailyForecast.Forecast dayForecast = forecast.getForecastInstance(i);
                 DailyForecast.Forecast.Temperature temperature = dayForecast.getTemperatureInstance();
@@ -31,6 +34,21 @@ public class testWeatherAPI      {
                 System.out.println("\tTemperature: " + temperature.getMinimumTemperature() +
                         " to " + temperature.getMaximumTemperature() + "\n");
             }
+
+            System.out.println("\n\n---------------------------------------------------------\n\n");
+
+            CurrentWeather currWeather = owm.currentWeatherByCityName("Porto");
+
+            CurrentWeather.Main mainWeather = currWeather.getMainInstance();
+            CurrentWeather.Wind windWeather = currWeather.getWindInstance();
+
+            System.out.println(mainWeather.getMaxTemperature());
+            System.out.println(mainWeather.getMinTemperature());
+            System.out.println(mainWeather.getHumidity());
+            System.out.println(windWeather.getWindSpeed());
+
+
+
         }
         catch (IOException e) {
             e.printStackTrace();
