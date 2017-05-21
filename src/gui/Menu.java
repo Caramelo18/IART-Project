@@ -19,7 +19,6 @@ public class Menu extends JFrame{
     private JTextArea textArea;
     private JTextField ph;
     private JTextField wind;
-    private JTextField outWind;
     private JTextField airH;
     private JTextField outAirH;
     private JTextField soilH;
@@ -246,7 +245,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 Float[] params = Launcher.analyzeNewCity(city.getText());
                 if (params != null) {
-                    outWind.setText(params[0].toString());
+                    wind.setText(params[0].toString());
                     outAirH.setText(params[1].toString());
                     outTemperature.setText(params[2].toString());
                     Calendar calendar = new GregorianCalendar();
