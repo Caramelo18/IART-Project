@@ -190,6 +190,7 @@ public class Menu extends JFrame{
         saveConfigurationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                textArea.setText("");
                 String rule = "(params " + dayTempMin.getValue()
                         + " " + dayTempMax.getValue()
                         + " " + nightTempMin.getValue()

@@ -67,7 +67,10 @@ public class Launcher {
             //      expressions
             double xHot[] = {minHot, minHot + 5};
             double yHot[] = {0, 1};
-            double xCold[] = {maxCold - 10, maxCold};
+            int freeze = 0;
+            if(maxCold - 5 > 0) freeze = maxCold - 5;
+            else freeze = 0;
+            double xCold[] = {freeze, maxCold};
             double yCold[] = {1, 0};
 
             // Create new fuzzy variable for temperature with Universe of discourse
