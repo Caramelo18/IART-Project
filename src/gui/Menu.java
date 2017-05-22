@@ -59,14 +59,12 @@ public class Menu extends JFrame{
     private JComboBox and22;
     private JComboBox and31;
     private JComboBox and32;
-    private JRadioButton dayRadio3;
     private JComboBox temp21;
     private JComboBox temp22;
     private JComboBox temp23;
     private JComboBox temp31;
     private JComboBox temp32;
     private JComboBox temp33;
-    private JRadioButton dayRadio2;
     private JTextField city;
     private JButton getDataFromCityButton;
 
@@ -218,7 +216,7 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent actionEvent) {
                 int numGraphs = 0;
                 String[] list;
-                boolean[] days;
+                boolean day;
                 if(activate1.isSelected())
                     numGraphs++;
                 if(activate2.isSelected())
@@ -226,39 +224,33 @@ public class Menu extends JFrame{
                 if(activate3.isSelected())
                     numGraphs++;
                 if(numGraphs == 0) return;
+                day = dayRadio1.isSelected();
                 list = new String[numGraphs];
-                days = new boolean[numGraphs];
                 numGraphs = 0;
 
                 if(activate1.isSelected()){
-                    boolean day = dayRadio1.isSelected();
                     String fuzzy = "";
                     fuzzy += analyzeMain(not11, temp11);
                     fuzzy += analyzeOptional(and11, not12, temp12);
                     fuzzy += analyzeOptional(and12, not13, temp13);
-                    days[numGraphs] = day;
                     list[numGraphs++] = fuzzy;
                 }
                 if(activate2.isSelected()){
-                    boolean day = dayRadio2.isSelected();
                     String fuzzy = "";
                     fuzzy += analyzeMain(not21, temp21);
                     fuzzy += analyzeOptional(and21, not22, temp22);
                     fuzzy += analyzeOptional(and22, not23, temp23);
-                    days[numGraphs] = day;
                     list[numGraphs++] = fuzzy;
                 }
                 if(activate3.isSelected()){
-                    boolean day = dayRadio3.isSelected();
                     String fuzzy = "";
                     fuzzy += analyzeMain(not31, temp31);
                     fuzzy += analyzeOptional(and31, not32, temp32);
                     fuzzy += analyzeOptional(and32, not33, temp33);
-                    days[numGraphs] = day;
-                    list[numGraphs++] = fuzzy;
+                    list[numGraphs] = fuzzy;
                 }
 
-                String plot = Launcher.setFuzzyPlot(list, days);
+                String plot = Launcher.setFuzzyPlot(list, day);
                 stats.setText(plot);
             }
         });
