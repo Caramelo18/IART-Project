@@ -119,7 +119,38 @@ public class Menu extends JFrame{
                         Launcher.addEval(rule);
                         Launcher.run(false);
                     } else {
-                        textArea.setText("Invalid weather conditions\n");
+                        String message = "Missing weather conditions\n";
+                        float tOutTemp, tWind, tHum;
+                        if (outTemperature.getText().isEmpty()) {
+                            message += ("Outside temperature used is 20ºC\n");
+                            tOutTemp = 20;
+                        }else {
+                            tOutTemp = Float.parseFloat(outTemperature.getText());
+                        }
+
+                        if (outAirH.getText().isEmpty()) {
+                            message += ("Outside air humidity used is 60%\n");
+                            tHum = 60;
+                        }else {
+                            tHum = Float.parseFloat(outAirH.getText());
+                        }
+
+                        if (wind.getText().isEmpty()) {
+                            message += ("Wind speed used is 15 km/h\n");
+                            tWind = 15;
+                        }else {
+                            tWind = Float.parseFloat(wind.getText());
+                        }
+
+                        String rule = "(params2 " + tOutTemp
+                                + " " + tHum
+                                + " " + tWind
+                                + ")";
+                        Launcher.addEval(rule);
+                        Launcher.run(false);
+
+
+                        textArea.setText(message);
                     }
 
                     if (!temperature.getText().isEmpty()) {
